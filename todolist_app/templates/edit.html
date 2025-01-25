@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Edit Task - Taskmate</title>
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <br>
+
+        {% if task_obj.owner == request.user %}
+            <form method="POST" class="row">
+                {% csrf_token %} {% comment %} This is a security feature to prevent Cross-Site Request Forgery (CSRF) attacks. {% endcomment %}
+                <label class="col-lg-2"></label>
+                <div class="col-lg-6">
+                    <input type="text" class="form-control" name='task' placeholder="{{ task_obj.task }}" value="{{ task_obj.task }}">
+                    <input type="hidden" name='done' value="{{ task_obj.done }}">
+                </div>
+                <button type="submit" class="btn btn-primary col-lg-2">Update Task</button>
+            </form>
+        {% else %}
+            <h3>Sorry, you are not allowed to edit this task.</h3>
+        {% endif %}
+    </div>
+{% endblock content %}
